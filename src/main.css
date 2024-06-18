@@ -57,7 +57,7 @@ body {
 	background-color: #2a2a3a;
 	width: 100%;
 	border: none;
-	color: white;
+	color: #ffffff;
 	padding: 15px 32px;
 	text-align: center;
 	text-decoration: none;
@@ -83,6 +83,53 @@ button:disabled:active {
 	transform: none;
 }
 
-form div {
-	margin: 37px 0;
+.wrap {
+	margin-bottom: 16px;
+}
+
+.label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.input {
+	width: 96%;
+	padding: 5px;
+	border-radius: 5px;
+	border: none;
+}
+
+.input:focus {
+	outline: none;
+	border: none;
+}
+
+.error {
+	color: #ff0000;
+	font-weight: bold;
+	min-height: 20px;
+	margin-bottom: 5px;
+	font-size: 15px;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+	width: 24px;
+	height: 24px;
+	background: #2a2a3a;
+	color: #007ea8;
+	border-radius: 50%;
+	border: 2px solid #00bfff;
+}
+
+input[type='number']::-webkit-inner-spin-button {
+	background: linear-gradient(180deg, #2a2a3a 50%, #00bfff 50%);
+}
+
+input[type='number']::-webkit-outer-spin-button {
+	background: linear-gradient(180deg, #00bfff 50%, #2a2a3a 50%);
 }

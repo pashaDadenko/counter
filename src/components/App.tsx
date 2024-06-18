@@ -1,28 +1,57 @@
 import { Count } from './Count';
 import { Buttons } from './Buttons';
-import { FC, useState } from 'react';
-import { ProgressBar } from './ProgressBar';
 import { MaxValue } from './MaxValue';
 import { Settings } from './Settings';
+import { ProgressBar } from './ProgressBar';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
 
 export const App: FC = () => {
 	const [count, setCount] = useState(0);
-
 	const [maxValue, setMaxValue] = useState(5);
-
 	const [settings, setSettings] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
-	const reset = () => setCount(0);
+	const increment = () => {
+		setCount((prevCount) => prevCount + 1);
+	};
 
-	const onOffSettings = () => setSettings(!settings);
+	const reset = () => {
+		setCount(0);
+		setMaxValue(Math.floor(Math.random() * 10) + 1);
+		setError(null);
+	};
 
-	const increment = () => setCount((prevCount) => prevCount + 1);
+	const onOffSettings = () => {
+		setSettings(!settings);
+		setError(null);
+	};
 
-	const handleStartValueChange = (e: React.ChangeEvent<HTMLInputElement>) => setCount(Number(e.target.value));
+	const handleStartValueChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const newValue = +e.target.value;
+		if (newValue < 0 || newValue > maxValue) {
+			setError(`Start value must be between 0 and ${maxValue}`);
+		} else {
+			setError(null);
+			setCount(newValue);
+		}
+	};
 
-	const handleMaxValueChange = (e: React.ChangeEvent<HTMLInputElement>) => setMaxValue(Number(e.target.value));
+	const handleMaxValueChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const newValue = Number(e.target.value);
+		if (newValue < count) {
+			setError(`Max value must be greater than or equal to start value (${count})`);
+		} else {
+			setError(null);
+			setMaxValue(newValue);
+		}
+	};
 
-	const handleSettingsSubmit = (e: React.FormEvent<HTMLFormElement>) => (e.preventDefault(), setSettings(false));
+	const handleSettingsSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (!error) {
+			setSettings(!settings);
+		}
+	};
 
 	const progress = (count / maxValue) * 100;
 
@@ -35,7 +64,7 @@ export const App: FC = () => {
 					<ProgressBar progress={progress} />
 				</>
 			) : (
-				<Settings count={count} maxValue={maxValue} onOffSettings={onOffSettings} handleMaxValueChange={handleMaxValueChange} handleStartValueChange={handleStartValueChange} handleSettingsSubmit={handleSettingsSubmit} />
+				<Settings count={count} maxValue={maxValue} error={error} onOffSettings={onOffSettings} handleMaxValueChange={handleMaxValueChange} handleStartValueChange={handleStartValueChange} handleSettingsSubmit={handleSettingsSubmit} />
 			)}
 			<Buttons increment={increment} reset={reset} disableIncrement={progress === 100} disableReset={progress < 100} settings={settings} onOffSettings={onOffSettings} />
 		</div>
