@@ -3,8 +3,8 @@ import { Buttons } from './Buttons';
 import { MaxValue } from './MaxValue';
 import { Settings } from './Settings';
 import { ProgressBar } from './ProgressBar';
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { useLocalStorage } from '../hook/useLocalStorage.ts';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
 
 export const App: FC = () => {
 	const [count, setCount] = useLocalStorage<number>('count', 0);
