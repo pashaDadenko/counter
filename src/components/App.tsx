@@ -4,11 +4,12 @@ import { MaxValue } from './MaxValue';
 import { Settings } from './Settings';
 import { ProgressBar } from './ProgressBar';
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { useLocalStorage } from '../hook/useLocalStorage.ts';
 
 export const App: FC = () => {
-	const [count, setCount] = useState(0);
-	const [maxValue, setMaxValue] = useState(5);
-	const [settings, setSettings] = useState(false);
+	const [count, setCount] = useLocalStorage<number>('count', 0);
+	const [maxValue, setMaxValue] = useLocalStorage<number>('maxValue', 5);
+	const [settings, setSettings] = useLocalStorage<boolean>('settings', false);
 	const [error, setError] = useState<string | null>(null);
 
 	const increment = () => {
